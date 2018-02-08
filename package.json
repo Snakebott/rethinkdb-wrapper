@@ -1,0 +1,28 @@
+{
+  "name": "rethinkdb-wrapper",
+  "version": "1.0.0",
+  "description": "rethinkdb wrapper",
+  "main": "index.js",
+  "dependencies": {
+    "rethinkdb": "^2.3.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/snakebott/rethinkdb-wrapper.git"
+  },
+  "keywords": [
+    "rethinkdb",
+    "wrapper",
+    "database"
+  ],
+  "author": "snakebot",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/snakebott/rethinkdb-wrapper/issues"
+  },
+  "homepage": "https://github.com/snakebott/rethinkdb-wrapper#readme"
+}
