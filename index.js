@@ -10,7 +10,7 @@ class Database {
     /**
      * create instanse
      * @param {obejct} dbconfig
-     * @param {string} dbconfig.host - database host
+     * @param {string} dbconfig.host database host
      * @param {number} dbconfig.port
      * @param {string} dbconfig.user
      * @param {string} dbconfig.password
@@ -103,7 +103,7 @@ class Database {
 
     /**
      * change default database
-     * @param {string} db - database name
+     * @param {string} db database name
      */
     async use(db){
         await this.conn.use(db);
@@ -132,7 +132,7 @@ class Database {
 
     /**
      * 
-     * @param {object} reql - REQL string
+     * @param {object} reql REQL string
      */
     async select(reql){
         try {
@@ -142,6 +142,22 @@ class Database {
             this.logger.error(`Error: ${error.message}`);
             this.logger.error(error);
         }        
+    }
+
+    /**
+     * read data from table
+     * @param {string} table rethinkdb table
+     * @param {number} limit limit result data
+     */
+    async read(table, limit = 0){
+        if(!this.db){
+            this.logger.error('Error: reading from table - database not selected');
+            return false;
+        }
+        let reql = (limit > 0)? r.db(this.db).table(table).limit(limit) 
+            : r.db(this.db).table(table);
+        let cursor = await reql.run(this.conn);
+        return cursor.toArray();
     }
 }
 
