@@ -107,12 +107,41 @@ class Database {
      */
     async use(db){
         await this.conn.use(db);
-        this.db = db;
+        try {
+            let info = await r.db(db).info().run(this.conn);
+            this.logger.info(`database was changed to ${db}`);
+            this.logger.debug(info);
+            this.db = db;
+        } catch (error) {
+            this.logger.error(`Error: ${error.message}`);
+            this.logger.debug(error);
+        }
     }
 
+    /** 
+     * return table list
+    */
     async tableList(){
+        if(!this.db){
+            this.logger.error('Error: getting table list error - database not selected');
+            return false;
+        }
         let TList = await r.db(this.db).tableList().run(this.conn);
         return TList;
+    }
+
+    /**
+     * 
+     * @param {object} reql - REQL string
+     */
+    async select(reql){
+        try {
+            let cursor = await reql.run(this.conn);
+            return await cursor.toArray();
+        } catch (error) {
+            this.logger.error(`Error: ${error.message}`);
+            this.logger.error(error);
+        }        
     }
 }
 
